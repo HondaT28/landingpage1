@@ -1,0 +1,16 @@
+# Python
+__pycache__/
+.venv/
+venv/
+*.py[cod]
+
+# Build / local
+out/
+dist/
+.env
+.env.*
+
+# OS / editor
+Thumbs.db
+.DS_Store
+*.swp
