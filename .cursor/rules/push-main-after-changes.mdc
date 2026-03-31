@@ -1,0 +1,16 @@
+---
+description: Sempre enviar alterações deste repositório para origin/main após editar arquivos
+alwaysApply: true
+---
+
+# Git — push imediato na `main`
+
+Neste projeto (`landingpage1`), depois de alterar qualquer arquivo versionado:
+
+1. `git add -A` (ou os paths necessários)
+2. `git commit -m "<mensagem clara>"`
+3. `git push origin main`
+
+Faça isso **no mesmo turno** em que aplicar as edições, salvo se o usuário pedir explicitamente para não publicar.
+
+Use Git em `C:\Program Files\Git\bin\git.exe` se `git` não estiver no PATH.
