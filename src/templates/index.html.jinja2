@@ -48,11 +48,11 @@
     <section class="hero" aria-labelledby="hero-title">
       <div class="container hero-inner">
         <p class="eyebrow">Mapeamento de processos para empresas</p>
-        <h1 id="hero-title">Mais eficiência, menos retrabalho: transforme sua operação com um processo claro de ponta a ponta</h1>
-        <p class="lead">
+        <h1 id="hero-title" class="hero-animate hero-animate-title">Mais eficiência, menos retrabalho: transforme sua operação com um processo claro de ponta a ponta</h1>
+        <p class="lead hero-animate hero-animate-lead">
           Aplicamos metodologia prática em 4 etapas para mapear, analisar e redesenhar seus processos críticos. Você ganha visibilidade sobre gargalos, prioriza melhorias e acelera decisões com segurança.
         </p>
-        <div class="hero-actions">
+        <div class="hero-actions hero-animate hero-animate-actions">
           <a class="btn btn-primary" href="#contato">Converse conosco</a>
           <a class="btn btn-ghost" href="#processo">Ver processo</a>
         </div>
@@ -66,19 +66,19 @@
           Cada etapa foi desenhada para gerar resultado de negócio, não apenas documentação. Do diagnóstico ao plano de ação, entregamos clareza para você tomar decisões, reduzir desperdícios e aumentar performance operacional.
         </p>
         <ul class="cards cards-4">
-          <li class="card card-service">
+          <li class="card card-service process-card">
             <h3><span class="process-step">1</span><span class="process-title">Diagnóstico e entendimento do negócio</span></h3>
             <p>Entendemos sua estratégia, metas e dores operacionais para mapear o que realmente impacta resultado, custo e experiência do cliente.</p>
           </li>
-          <li class="card card-service">
+          <li class="card card-service process-card">
             <h3><span class="process-step">2</span><span class="process-title">Mapeamento dos processos atuais</span></h3>
             <p>Documentamos o fluxo AS-IS de forma estruturada e visual, trazendo transparência sobre etapas, responsáveis, riscos e pontos de atraso.</p>
           </li>
-          <li class="card card-service">
+          <li class="card card-service process-card">
             <h3><span class="process-step">3</span><span class="process-title">Análise e identificação de otimizações</span></h3>
             <p>Identificamos gargalos, retrabalhos e desperdícios com foco em ganho rápido e sustentável para produtividade e margem operacional.</p>
           </li>
-          <li class="card card-service">
+          <li class="card card-service process-card">
             <h3><span class="process-step">4</span><span class="process-title">Redesenho e plano de ação</span></h3>
             <p>Construímos o processo TO-BE e um plano executável por prioridade, para sua equipe implementar melhorias com previsibilidade.</p>
           </li>
@@ -287,6 +287,55 @@
         { threshold: 0.25 }
       );
       obs.observe(document.getElementById("resultados"));
+    })();
+    (function () {
+      var animated = document.querySelectorAll(".hero-animate");
+      if (!animated.length) return;
+      function show(el, delay) {
+        setTimeout(function () {
+          el.classList.add("is-visible");
+        }, delay);
+      }
+      show(document.querySelector(".hero-animate-title"), 80);
+      show(document.querySelector(".hero-animate-lead"), 300);
+      show(document.querySelector(".hero-animate-actions"), 560);
+    })();
+    (function () {
+      var revealTargets = document.querySelectorAll(
+        ".section-title, .section-intro, .card, .diff-item, .stat, .contact-copy, .contact-form, .cta-final-inner, .footer-inner"
+      );
+      if (!revealTargets.length || !("IntersectionObserver" in window)) return;
+      revealTargets.forEach(function (el) {
+        el.classList.add("reveal-on-scroll");
+      });
+      var revealObserver = new IntersectionObserver(
+        function (entries, observer) {
+          entries.forEach(function (entry) {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add("is-revealed");
+            observer.unobserve(entry.target);
+          });
+        },
+        { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
+      );
+      revealTargets.forEach(function (el) {
+        revealObserver.observe(el);
+      });
+    })();
+    (function () {
+      var cards = document.querySelectorAll(".process-card");
+      if (!cards.length) return;
+      var active = 0;
+      function paint(idx) {
+        cards.forEach(function (card, i) {
+          card.classList.toggle("is-highlighted", i === idx);
+        });
+      }
+      paint(active);
+      setInterval(function () {
+        active = (active + 1) % cards.length;
+        paint(active);
+      }, 1400);
     })();
     (function () {
       var GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyGRmLYdemi_k02PlDmtAb5iH6ZTwGvIsgb7-gBO-is1TdGD55fQ7I7pNan3PnD-eBi/exec";
