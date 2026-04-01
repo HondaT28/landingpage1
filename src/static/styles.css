@@ -741,18 +741,15 @@ body {
   right: 1rem;
   bottom: 1rem;
   z-index: 120;
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  gap: 0.45rem;
-  padding: 0.7rem 0.95rem;
-  border-radius: 999px;
+  justify-content: center;
+  width: 3.2rem;
+  height: 3.2rem;
+  border-radius: 50%;
   background: #25d366;
   color: #fff;
   text-decoration: none;
-  font-family: var(--font-heading);
-  font-size: 0.74rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.22);
 }
 
