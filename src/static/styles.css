@@ -78,8 +78,8 @@ body {
   position: sticky;
   top: 0;
   z-index: 50;
-  background: #05285b;
-  border-bottom: 3px solid #d8c11a;
+  background: #f4f4f4;
+  border-bottom: 1px solid #d7dbe2;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
 }
 
@@ -130,7 +130,7 @@ body {
 }
 
 .nav-list a {
-  color: #f7fbff;
+  color: #05285b;
   text-decoration: none;
   font-family: "Roboto", var(--font-sans);
   font-weight: 700;
@@ -141,30 +141,31 @@ body {
 
 .nav-list a:hover,
 .nav-list a:focus-visible {
-  color: #e6d11f;
+  color: #1a5fb4;
 }
 
 .nav-cta {
-  padding: 0.48rem 0.95rem;
+  padding: 0.45rem 0.9rem;
   border-radius: var(--radius);
-  background: #e6d11f;
+  background: transparent;
   color: #05285b !important;
+  border: 1px solid #05285b;
 }
 
 .nav-cta:hover,
 .nav-cta:focus-visible {
-  background: #d8c11a;
-  color: #05285b !important;
+  background: #05285b;
+  color: #f4f4f4 !important;
 }
 
 .nav-toggle {
   display: none;
   font-family: "Roboto", var(--font-sans);
   padding: 0.45rem 0.8rem;
-  border: 1px solid #d8c11a;
+  border: 1px solid #05285b;
   border-radius: var(--radius);
-  background: #05285b;
-  color: #fff;
+  background: #f4f4f4;
+  color: #05285b;
   cursor: pointer;
   text-transform: uppercase;
   font-size: 0.75rem;
@@ -185,9 +186,9 @@ body {
   justify-content: center;
   border-radius: 50%;
   background: transparent;
-  color: #f7fbff;
+  color: #05285b;
   text-decoration: none;
-  border: 1px solid rgba(247, 251, 255, 0.45);
+  border: 1px solid rgba(5, 40, 91, 0.3);
 }
 
 .social-link svg {
@@ -198,9 +199,9 @@ body {
 
 .social-link:hover,
 .social-link:focus-visible {
-  background: #e6d11f;
-  color: #05285b;
-  border-color: #e6d11f;
+  background: #05285b;
+  color: #f4f4f4;
+  border-color: #05285b;
 }
 
 @media (max-width: 900px) {
@@ -215,8 +216,8 @@ body {
     top: 100%;
     flex-direction: column;
     align-items: stretch;
-    background: #05285b;
-    border: 1px solid rgba(230, 209, 31, 0.45);
+    background: #f4f4f4;
+    border: 1px solid #d7dbe2;
     border-radius: var(--radius);
     padding: 0.75rem;
     box-shadow: var(--shadow);
