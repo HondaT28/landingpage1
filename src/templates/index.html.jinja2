@@ -276,10 +276,11 @@
       obs.observe(document.getElementById("resultados"));
     })();
     (function () {
+      var GOOGLE_APPS_SCRIPT_URL = "COLE_AQUI_URL_WEBAPP_GOOGLE_APPS_SCRIPT";
       var form = document.getElementById("form-contato");
       var feedback = document.getElementById("form-feedback");
       if (!form) return;
-      form.addEventListener("submit", function (e) {
+      form.addEventListener("submit", async function (e) {
         e.preventDefault();
         var nome = document.getElementById("nome").value.trim();
         var email = document.getElementById("email").value.trim();
@@ -291,23 +292,37 @@
           feedback.textContent = "Preencha nome, email e a descrição do projeto.";
           return;
         }
-        var body =
-          "Nome: " + nome + "\n" +
-          "Email: " + email + "\n" +
-          "Whatsapp: " + wa + "\n" +
-          "Investimento: " + (inv || "—") + "\n" +
-          "Área: " + (area || "—") + "\n\n" +
-          "Projeto:\n" + msg;
-        var official = "https://www.itajr.com.br/";
-        function afterCopy() {
-          feedback.textContent =
-            "Abrimos o site oficial itajr.com.br em uma nova aba. Finalize o contato pelo formulário lá, como no site da ITA Júnior.";
-          window.open(official, "_blank", "noopener,noreferrer");
+        if (!GOOGLE_APPS_SCRIPT_URL || GOOGLE_APPS_SCRIPT_URL.indexOf("COLE_AQUI_") === 0) {
+          feedback.textContent = "Configuração pendente: cole a URL do Web App do Google Apps Script.";
+          return;
         }
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-          navigator.clipboard.writeText(body).then(afterCopy).catch(afterCopy);
-        } else {
-          afterCopy();
+        var payload = {
+          submitted_at: new Date().toISOString(),
+          page_url: window.location.href,
+          user_agent: window.navigator.userAgent,
+          nome: nome,
+          email: email,
+          whatsapp: wa || "",
+          investimento: inv || "",
+          etapa_processo: area || "",
+          mensagem: msg
+        };
+        feedback.textContent = "Enviando seus dados...";
+        var submitBtn = form.querySelector("button[type='submit']");
+        if (submitBtn) submitBtn.disabled = true;
+        try {
+          await fetch(GOOGLE_APPS_SCRIPT_URL, {
+            method: "POST",
+            mode: "no-cors",
+            headers: { "Content-Type": "text/plain;charset=utf-8" },
+            body: JSON.stringify(payload)
+          });
+          feedback.textContent = "Recebemos seu contato! Em breve nossa equipe retorna.";
+          form.reset();
+        } catch (err) {
+          feedback.textContent = "Nao foi possivel enviar agora. Tente novamente em instantes.";
+        } finally {
+          if (submitBtn) submitBtn.disabled = false;
         }
       });
     })();
