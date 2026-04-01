@@ -12,17 +12,21 @@ const HEADER = [
   "user_agent",
 ];
 const INVESTIMENTO_OPTIONS = [
-  "Até 10k",
-  "10k a 20k",
-  "20k a 50k",
-  "Acima de 50k",
+  "Até 10.000",
+  "10.000 a 20.000",
+  "20.000 a 50.000",
+  "Acima de 50.000",
   "A definir com a consultoria",
 ];
 const INVESTIMENTO_LEGACY_MAP = {
-  "Até R$ 15.000": "Até 10k",
-  "R$ 15.000 a R$ 40.000": "20k a 50k",
-  "R$ 40.000 a R$ 100.000": "Acima de 50k",
-  "Acima de R$ 100.000": "Acima de 50k",
+  "Até 10k": "Até 10.000",
+  "10k a 20k": "10.000 a 20.000",
+  "20k a 50k": "20.000 a 50.000",
+  "Acima de 50k": "Acima de 50.000",
+  "Até R$ 15.000": "Até 10.000",
+  "R$ 15.000 a R$ 40.000": "20.000 a 50.000",
+  "R$ 40.000 a R$ 100.000": "Acima de 50.000",
+  "Acima de R$ 100.000": "Acima de 50.000",
   "A definir com consultoria": "A definir com a consultoria",
 };
 
