@@ -181,7 +181,7 @@
             <input type="tel" name="whatsapp" id="whatsapp" autocomplete="tel" placeholder="(00) 00000-0000" />
           </label>
           <label class="field">
-            <span>Quanto Você pretende Investir em seu projeto?</span>
+            <span>Quanto você pretende investir?</span>
             <select name="investimento" id="investimento">
               <option value="">Selecione um valor...</option>
               <option value="Até 10.000">Até 10.000</option>
@@ -189,16 +189,6 @@
               <option value="20.000 a 50.000">20.000 a 50.000</option>
               <option value="Acima de 50.000">Acima de 50.000</option>
               <option value="A definir com a consultoria">A definir com a consultoria</option>
-            </select>
-          </label>
-          <label class="field">
-            <span>Em qual etapa do processo você precisa de apoio?</span>
-            <select name="area" id="area">
-              <option value="">Selecione uma etapa...</option>
-              <option value="Diagnóstico e entendimento do negócio">Diagnóstico e entendimento do negócio</option>
-              <option value="Mapeamento dos processos atuais">Mapeamento dos processos atuais</option>
-              <option value="Análise e identificação de otimizações">Análise e identificação de otimizações</option>
-              <option value="Redesenho e plano de ação">Redesenho e plano de ação</option>
             </select>
           </label>
           <label class="field field--full">
@@ -309,7 +299,6 @@
         var email = document.getElementById("email").value.trim();
         var wa = document.getElementById("whatsapp").value.trim();
         var inv = document.getElementById("investimento").value;
-        var area = document.getElementById("area").value;
         var msg = document.getElementById("mensagem").value.trim();
         if (!nome || !email || !msg) {
           feedback.textContent = "Preencha nome, email e a descrição do projeto.";
@@ -327,7 +316,7 @@
           email: email,
           whatsapp: wa || "",
           investimento: inv || "",
-          etapa_processo: area || "",
+          etapa_processo: "",
           mensagem: msg
         };
         function toPublicAppsScriptUrl(url) {
