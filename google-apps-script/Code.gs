@@ -11,6 +11,20 @@ const HEADER = [
   "page_url",
   "user_agent",
 ];
+const INVESTIMENTO_OPTIONS = [
+  "Até 10k",
+  "10k a 20k",
+  "20k a 50k",
+  "Acima de 50k",
+  "A definir com a consultoria",
+];
+const INVESTIMENTO_LEGACY_MAP = {
+  "Até R$ 15.000": "Até 10k",
+  "R$ 15.000 a R$ 40.000": "20k a 50k",
+  "R$ 40.000 a R$ 100.000": "Acima de 50k",
+  "Acima de R$ 100.000": "Acima de 50k",
+  "A definir com consultoria": "A definir com a consultoria",
+};
 
 function doPost(e) {
   try {
@@ -49,12 +63,20 @@ function parsePayload_(e) {
     nome: firstNonEmpty_(parsed.nome, params.nome),
     email: firstNonEmpty_(parsed.email, params.email),
     whatsapp: firstNonEmpty_(parsed.whatsapp, params.whatsapp),
-    investimento: firstNonEmpty_(parsed.investimento, params.investimento),
+    investimento: normalizeInvestimento_(firstNonEmpty_(parsed.investimento, params.investimento)),
     etapa_processo: firstNonEmpty_(parsed.etapa_processo, params.etapa_processo),
     mensagem: firstNonEmpty_(parsed.mensagem, params.mensagem),
     page_url: firstNonEmpty_(parsed.page_url, params.page_url),
     user_agent: firstNonEmpty_(parsed.user_agent, params.user_agent),
   };
+}
+
+function normalizeInvestimento_(value) {
+  const raw = String(value || "").trim();
+  if (!raw) return "";
+  if (INVESTIMENTO_OPTIONS.indexOf(raw) >= 0) return raw;
+  if (INVESTIMENTO_LEGACY_MAP[raw]) return INVESTIMENTO_LEGACY_MAP[raw];
+  return raw;
 }
 
 function firstNonEmpty_() {
