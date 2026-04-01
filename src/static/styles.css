@@ -735,3 +735,35 @@ body {
 .footer-links a:focus-visible {
   color: var(--color-primary);
 }
+
+.whatsapp-float {
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 120;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.7rem 0.95rem;
+  border-radius: 999px;
+  background: #25d366;
+  color: #fff;
+  text-decoration: none;
+  font-family: var(--font-heading);
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.22);
+}
+
+.whatsapp-float svg {
+  width: 1.35rem;
+  height: 1.35rem;
+  fill: currentColor;
+  flex: 0 0 auto;
+}
+
+.whatsapp-float:hover,
+.whatsapp-float:focus-visible {
+  background: #1faa52;
+}
