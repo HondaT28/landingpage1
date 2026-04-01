@@ -78,8 +78,8 @@ body {
   position: sticky;
   top: 0;
   z-index: 50;
-  background: var(--color-surface);
-  border-bottom: 3px solid var(--color-primary);
+  background: #05285b;
+  border-bottom: 3px solid #d8c11a;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
 }
 
@@ -94,7 +94,7 @@ body {
 .header-right {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 1rem;
 }
 
 .nav {
@@ -109,7 +109,7 @@ body {
 
 .logo-image {
   display: block;
-  width: min(340px, 58vw);
+  width: min(320px, 56vw);
   height: auto;
 }
 
@@ -130,39 +130,41 @@ body {
 }
 
 .nav-list a {
-  color: var(--color-muted);
+  color: #f7fbff;
   text-decoration: none;
-  font-weight: 600;
-  font-size: 0.85rem;
+  font-family: "Roboto", var(--font-sans);
+  font-weight: 700;
+  font-size: 0.78rem;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.08em;
 }
 
 .nav-list a:hover,
 .nav-list a:focus-visible {
-  color: var(--color-primary);
+  color: #e6d11f;
 }
 
 .nav-cta {
-  padding: 0.5rem 1rem;
+  padding: 0.48rem 0.95rem;
   border-radius: var(--radius);
-  background: var(--color-primary);
-  color: #fff !important;
+  background: #e6d11f;
+  color: #05285b !important;
 }
 
 .nav-cta:hover,
 .nav-cta:focus-visible {
-  background: var(--color-primary-hover);
-  color: #fff !important;
+  background: #d8c11a;
+  color: #05285b !important;
 }
 
 .nav-toggle {
   display: none;
-  font: inherit;
+  font-family: "Roboto", var(--font-sans);
   padding: 0.45rem 0.8rem;
-  border: 1px solid var(--color-border);
+  border: 1px solid #d8c11a;
   border-radius: var(--radius);
-  background: var(--color-surface);
+  background: #05285b;
+  color: #fff;
   cursor: pointer;
   text-transform: uppercase;
   font-size: 0.75rem;
@@ -182,10 +184,10 @@ body {
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background: #e9eef6;
-  color: var(--color-primary);
+  background: transparent;
+  color: #f7fbff;
   text-decoration: none;
-  border: 1px solid #d0d9e8;
+  border: 1px solid rgba(247, 251, 255, 0.45);
 }
 
 .social-link svg {
@@ -196,8 +198,9 @@ body {
 
 .social-link:hover,
 .social-link:focus-visible {
-  background: var(--color-primary);
-  color: #fff;
+  background: #e6d11f;
+  color: #05285b;
+  border-color: #e6d11f;
 }
 
 @media (max-width: 900px) {
@@ -212,8 +215,8 @@ body {
     top: 100%;
     flex-direction: column;
     align-items: stretch;
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
+    background: #05285b;
+    border: 1px solid rgba(230, 209, 31, 0.45);
     border-radius: var(--radius);
     padding: 0.75rem;
     box-shadow: var(--shadow);
