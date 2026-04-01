@@ -276,7 +276,7 @@
       obs.observe(document.getElementById("resultados"));
     })();
     (function () {
-      var GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/a/macros/itajunior.com.br/s/AKfycbyGRmLYdemi_k02PlDmtAb5iH6ZTwGvIsgb7-gBO-is1TdGD55fQ7I7pNan3PnD-eBi/exec";
+      var GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyGRmLYdemi_k02PlDmtAb5iH6ZTwGvIsgb7-gBO-is1TdGD55fQ7I7pNan3PnD-eBi/exec";
       var form = document.getElementById("form-contato");
       var feedback = document.getElementById("form-feedback");
       if (!form) return;
@@ -307,11 +307,18 @@
           etapa_processo: area || "",
           mensagem: msg
         };
+        function toPublicAppsScriptUrl(url) {
+          return String(url || "").replace(
+            /https:\/\/script\.google\.com\/a\/macros\/[^/]+\/s\//,
+            "https://script.google.com/macros/s/"
+          );
+        }
+        var endpoint = toPublicAppsScriptUrl(GOOGLE_APPS_SCRIPT_URL);
         feedback.textContent = "Enviando seus dados...";
         var submitBtn = form.querySelector("button[type='submit']");
         if (submitBtn) submitBtn.disabled = true;
         try {
-          await fetch(GOOGLE_APPS_SCRIPT_URL, {
+          await fetch(endpoint, {
             method: "POST",
             mode: "no-cors",
             headers: { "Content-Type": "text/plain;charset=utf-8" },
