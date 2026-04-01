@@ -14,7 +14,7 @@ const HEADER = [
 
 function doPost(e) {
   try {
-    const payload = JSON.parse((e && e.postData && e.postData.contents) || "{}");
+    const payload = parsePayload_(e);
     const sheet = getOrCreateSheet_();
     sheet.appendRow([
       payload.submitted_at || new Date().toISOString(),
@@ -31,6 +31,40 @@ function doPost(e) {
   } catch (err) {
     return jsonOutput_({ ok: false, error: String(err) });
   }
+}
+
+function parsePayload_(e) {
+  const params = (e && e.parameter) || {};
+  const raw = (e && e.postData && e.postData.contents) || "";
+  let parsed = {};
+  if (raw) {
+    try {
+      parsed = JSON.parse(raw);
+    } catch (err) {
+      parsed = {};
+    }
+  }
+  return {
+    submitted_at: firstNonEmpty_(parsed.submitted_at, params.submitted_at),
+    nome: firstNonEmpty_(parsed.nome, params.nome),
+    email: firstNonEmpty_(parsed.email, params.email),
+    whatsapp: firstNonEmpty_(parsed.whatsapp, params.whatsapp),
+    investimento: firstNonEmpty_(parsed.investimento, params.investimento),
+    etapa_processo: firstNonEmpty_(parsed.etapa_processo, params.etapa_processo),
+    mensagem: firstNonEmpty_(parsed.mensagem, params.mensagem),
+    page_url: firstNonEmpty_(parsed.page_url, params.page_url),
+    user_agent: firstNonEmpty_(parsed.user_agent, params.user_agent),
+  };
+}
+
+function firstNonEmpty_() {
+  for (var i = 0; i < arguments.length; i++) {
+    var value = arguments[i];
+    if (value !== undefined && value !== null && String(value).trim() !== "") {
+      return String(value);
+    }
+  }
+  return "";
 }
 
 function setupLeadsSheet() {
