@@ -326,16 +326,16 @@ body {
   color: var(--color-primary);
 }
 
-/* Subtítulo: mesma tipografia que a antiga linha “Mapeamento de processos para empresas” */
+/* Subtítulo (Montserrat, menor que o bloco anterior de contexto) */
 .hero-subline {
   font-family: var(--font-heading);
-  font-size: clamp(1.35rem, 2.8vw, 1.95rem);
-  font-weight: 700;
-  line-height: 1.28;
+  font-size: clamp(1rem, 2vw, 1.32rem);
+  font-weight: 600;
+  line-height: 1.35;
   color: var(--color-text);
   margin: 0 0 1.15rem;
   max-width: 52ch;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.015em;
 }
 
 .hero-lead {
