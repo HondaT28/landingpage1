@@ -299,7 +299,8 @@ body {
 
 @media (min-width: 960px) {
   .hero-grid {
-    grid-template-columns: minmax(0, 1fr) minmax(300px, 400px);
+    /* Coluna de texto com largura única (título, sublinha e lead alinhados); formulário um pouco mais largo */
+    grid-template-columns: minmax(0, 60ch) minmax(340px, 480px);
     gap: 2.75rem;
     align-items: stretch;
   }
@@ -334,12 +335,12 @@ body {
   line-height: 1.35;
   color: var(--color-text);
   margin: 0 0 1.15rem;
-  max-width: 52ch;
+  max-width: 100%;
   letter-spacing: -0.015em;
 }
 
 .hero-lead {
-  max-width: 56ch;
+  max-width: 100%;
   margin-bottom: 1rem;
 }
 
@@ -398,6 +399,10 @@ body {
   color: var(--color-muted);
   margin: 0 0 1.75rem;
   max-width: 52ch;
+}
+
+.hero-copy .lead {
+  max-width: none;
 }
 
 .hero-animate {
