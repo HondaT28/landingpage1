@@ -1,6 +1,17 @@
 const SPREADSHEET_NAME = "Leads Tráfego Pago - Mapeamento de Processos";
 const SHEET_NAME = "Leads";
+/** Cabeçalho atual (sem investimento / etapa — removidos do formulário) */
 const HEADER = [
+  "submitted_at",
+  "nome",
+  "email",
+  "whatsapp",
+  "mensagem",
+  "page_url",
+  "user_agent",
+];
+/** Cabeçalho legado: planilhas criadas antes da remoção do campo investimento */
+const HEADER_LEGACY = [
   "submitted_at",
   "nome",
   "email",
@@ -11,50 +22,69 @@ const HEADER = [
   "page_url",
   "user_agent",
 ];
-const INVESTIMENTO_OPTIONS = [
-  "Até 10.000",
-  "10.000 a 20.000",
-  "20.000 a 50.000",
-  "Acima de 50.000",
-  "A definir com a consultoria",
-];
-const INVESTIMENTO_LEGACY_MAP = {
-  "Até 10k": "Até 10.000",
-  "10k a 20k": "10.000 a 20.000",
-  "20k a 50k": "20.000 a 50.000",
-  "Acima de 50k": "Acima de 50.000",
-  "Até R$ 15.000": "Até 10.000",
-  "R$ 15.000 a R$ 40.000": "20.000 a 50.000",
-  "R$ 40.000 a R$ 100.000": "Acima de 50.000",
-  "Acima de R$ 100.000": "Acima de 50.000",
-  "A definir com consultoria": "A definir com a consultoria",
-};
 
 function doPost(e) {
   try {
     const payload = parsePayload_(e);
     const sheet = getOrCreateSheet_();
-    sheet.appendRow([
-      payload.submitted_at || new Date().toISOString(),
-      payload.nome || "",
-      payload.email || "",
-      payload.whatsapp || "",
-      payload.investimento || "",
-      payload.etapa_processo || "",
-      payload.mensagem || "",
-      payload.page_url || "",
-      payload.user_agent || "",
-    ]);
+    const row = buildRowForSheet_(sheet, payload);
+    sheet.appendRow(row);
     return jsonOutput_({ ok: true });
   } catch (err) {
     return jsonOutput_({ ok: false, error: String(err) });
   }
 }
 
+/**
+ * Monta a linha conforme o cabeçalho da planilha (nova 7 colunas ou legada 9 colunas).
+ */
+function buildRowForSheet_(sheet, payload) {
+  const headers = getHeaderKeys_(sheet);
+  if (headers.length === 0) {
+    return rowFromKeys_(HEADER, payload);
+  }
+  if (isLegacyHeader_(headers)) {
+    return rowFromKeys_(HEADER_LEGACY, payload);
+  }
+  return rowFromKeys_(headers, payload);
+}
+
+function getHeaderKeys_(sheet) {
+  if (sheet.getLastRow() < 1) return [];
+  const lastCol = Math.max(sheet.getLastColumn(), 1);
+  const row = sheet.getRange(1, 1, 1, lastCol).getValues()[0];
+  return row.map(function (cell) {
+    return String(cell || "").trim();
+  });
+}
+
+function isLegacyHeader_(headers) {
+  return headers.indexOf("investimento") >= 0 || headers.indexOf("etapa_processo") >= 0;
+}
+
+function rowFromKeys_(keys, payload) {
+  return keys.map(function (key) {
+    if (key === "investimento" || key === "etapa_processo") return "";
+    var v = payload[key];
+    if (v === undefined || v === null) return "";
+    return String(v);
+  });
+}
+
 function parsePayload_(e) {
   const params = (e && e.parameter) || {};
-  const raw = (e && e.postData && e.postData.contents) || "";
-  let parsed = {};
+  var raw = "";
+  if (e && e.postData) {
+    raw = e.postData.contents || "";
+    if (!raw && typeof e.postData.getDataAsString === "function") {
+      try {
+        raw = e.postData.getDataAsString() || "";
+      } catch (err2) {
+        raw = "";
+      }
+    }
+  }
+  var parsed = {};
   if (raw) {
     try {
       parsed = JSON.parse(raw);
@@ -67,20 +97,10 @@ function parsePayload_(e) {
     nome: firstNonEmpty_(parsed.nome, params.nome),
     email: firstNonEmpty_(parsed.email, params.email),
     whatsapp: firstNonEmpty_(parsed.whatsapp, params.whatsapp),
-    investimento: normalizeInvestimento_(firstNonEmpty_(parsed.investimento, params.investimento)),
-    etapa_processo: firstNonEmpty_(parsed.etapa_processo, params.etapa_processo),
     mensagem: firstNonEmpty_(parsed.mensagem, params.mensagem),
     page_url: firstNonEmpty_(parsed.page_url, params.page_url),
     user_agent: firstNonEmpty_(parsed.user_agent, params.user_agent),
   };
-}
-
-function normalizeInvestimento_(value) {
-  const raw = String(value || "").trim();
-  if (!raw) return "";
-  if (INVESTIMENTO_OPTIONS.indexOf(raw) >= 0) return raw;
-  if (INVESTIMENTO_LEGACY_MAP[raw]) return INVESTIMENTO_LEGACY_MAP[raw];
-  return raw;
 }
 
 function firstNonEmpty_() {
@@ -100,14 +120,14 @@ function setupLeadsSheet() {
 
 function getOrCreateSheet_() {
   const files = DriveApp.getFilesByName(SPREADSHEET_NAME);
-  let spreadsheet;
+  var spreadsheet;
   if (files.hasNext()) {
     spreadsheet = SpreadsheetApp.open(files.next());
   } else {
     spreadsheet = SpreadsheetApp.create(SPREADSHEET_NAME);
   }
 
-  let sheet = spreadsheet.getSheetByName(SHEET_NAME);
+  var sheet = spreadsheet.getSheetByName(SHEET_NAME);
   if (!sheet) {
     sheet = spreadsheet.insertSheet(SHEET_NAME);
   }

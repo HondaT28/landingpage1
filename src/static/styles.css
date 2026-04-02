@@ -733,6 +733,11 @@ body {
   margin-top: 0.75rem;
 }
 
+/* Sobre nós — títulos dos cards de estatísticas */
+#resultados .stat-label {
+  color: #f5c609;
+}
+
 .stat-desc {
   margin: 0.65rem 0 0;
   font-size: 0.92rem;
