@@ -540,6 +540,77 @@ body {
   background: #e8ebf0;
 }
 
+/* Entregáveis — mesmo tom cinza-claro da base da página / hero */
+.section-entregaveis {
+  background: var(--color-bg);
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.cards-entregaveis {
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 768px) {
+  .cards-entregaveis {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+.entregavel-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 0;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.entregavel-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 28px rgba(12, 61, 122, 0.1);
+}
+
+.entregavel-card__media {
+  margin: 0;
+  padding: 1rem 1rem 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(180deg, #e8ebf0 0%, var(--color-surface) 100%);
+}
+
+.entregavel-card__media img {
+  display: block;
+  width: min(100%, 200px);
+  height: auto;
+  aspect-ratio: 160 / 100;
+  object-fit: contain;
+}
+
+.entregavel-card__title {
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.3;
+  margin: 0;
+  padding: 1.15rem 1.35rem 0.5rem;
+  color: var(--color-primary);
+}
+
+.entregavel-card__text {
+  margin: 0;
+  padding: 0 1.35rem 1.35rem;
+  color: var(--color-muted);
+  font-size: 0.95rem;
+  line-height: 1.55;
+  flex: 1;
+}
+
 .cards {
   list-style: none;
   margin: 0;
@@ -947,6 +1018,7 @@ body {
   .hero-animate,
   .reveal-on-scroll,
   .card-service,
+  .entregavel-card,
   .process-card.is-highlighted {
     transition: none !important;
     transform: none !important;
