@@ -307,8 +307,8 @@
           email: email,
           whatsapp: wa || "",
           mensagem: msg,
-          page_url: landingUrl,
-          user_agent: window.navigator.userAgent
+          user_agent: String(window.navigator.userAgent || ""),
+          page_url: landingUrl
         };
         function toPublicAppsScriptUrl(url) {
           return String(url || "").replace(

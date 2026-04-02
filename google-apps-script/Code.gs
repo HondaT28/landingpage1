@@ -2,7 +2,7 @@ const SPREADSHEET_NAME = "Leads Tráfego Pago - Mapeamento de Processos";
 const SHEET_NAME = "Leads";
 /**
  * Ordem fixa das colunas (planilha atual).
- * mensagem = texto do formulário | page_url = URL da landing
+ * user_agent antes de page_url para bater com planilhas onde a última coluna é page_url.
  */
 const HEADER = [
   "submitted_at",
@@ -10,10 +10,10 @@ const HEADER = [
   "email",
   "whatsapp",
   "mensagem",
-  "page_url",
   "user_agent",
+  "page_url",
 ];
-/** Planilhas antigas (investimento + etapa) — mesma ordem lógica para mensagem/page_url */
+/** Planilhas antigas (investimento + etapa) */
 const HEADER_LEGACY = [
   "submitted_at",
   "nome",
@@ -22,8 +22,8 @@ const HEADER_LEGACY = [
   "investimento",
   "etapa_processo",
   "mensagem",
-  "page_url",
   "user_agent",
+  "page_url",
 ];
 
 function doPost(e) {
