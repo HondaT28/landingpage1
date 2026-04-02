@@ -1,6 +1,9 @@
 const SPREADSHEET_NAME = "Leads Tráfego Pago - Mapeamento de Processos";
 const SHEET_NAME = "Leads";
-/** Cabeçalho atual (sem investimento / etapa — removidos do formulário) */
+/**
+ * Ordem fixa das colunas (planilha atual).
+ * mensagem = texto do formulário | page_url = URL da landing
+ */
 const HEADER = [
   "submitted_at",
   "nome",
@@ -10,7 +13,7 @@ const HEADER = [
   "page_url",
   "user_agent",
 ];
-/** Cabeçalho legado: planilhas criadas antes da remoção do campo investimento */
+/** Planilhas antigas (investimento + etapa) — mesma ordem lógica para mensagem/page_url */
 const HEADER_LEGACY = [
   "submitted_at",
   "nome",
@@ -36,17 +39,15 @@ function doPost(e) {
 }
 
 /**
- * Monta a linha conforme o cabeçalho da planilha (nova 7 colunas ou legada 9 colunas).
+ * Sempre grava na ordem HEADER ou HEADER_LEGACY (não na ordem “solta” da linha 1),
+ * para mensagem e page_url não trocarem de coluna.
  */
 function buildRowForSheet_(sheet, payload) {
   const headers = getHeaderKeys_(sheet);
-  if (headers.length === 0) {
-    return rowFromKeys_(HEADER, payload);
-  }
   if (isLegacyHeader_(headers)) {
     return rowFromKeys_(HEADER_LEGACY, payload);
   }
-  return rowFromKeys_(headers, payload);
+  return rowFromKeys_(HEADER, payload);
 }
 
 function getHeaderKeys_(sheet) {
@@ -92,13 +93,28 @@ function parsePayload_(e) {
       parsed = {};
     }
   }
+
   return {
-    submitted_at: firstNonEmpty_(parsed.submitted_at, params.submitted_at),
+    submitted_at: firstNonEmpty_(
+      parsed.submitted_at,
+      params.submitted_at
+    ),
     nome: firstNonEmpty_(parsed.nome, params.nome),
     email: firstNonEmpty_(parsed.email, params.email),
     whatsapp: firstNonEmpty_(parsed.whatsapp, params.whatsapp),
-    mensagem: firstNonEmpty_(parsed.mensagem, params.mensagem),
-    page_url: firstNonEmpty_(parsed.page_url, params.page_url),
+    mensagem: firstNonEmpty_(
+      parsed.mensagem,
+      parsed.message,
+      parsed.descricao,
+      params.mensagem
+    ),
+    page_url: firstNonEmpty_(
+      parsed.page_url,
+      parsed.pageUrl,
+      parsed.url,
+      parsed.landing_url,
+      params.page_url
+    ),
     user_agent: firstNonEmpty_(parsed.user_agent, params.user_agent),
   };
 }

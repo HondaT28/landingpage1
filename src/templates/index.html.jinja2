@@ -300,14 +300,15 @@
           feedback.textContent = "Configuração pendente: cole a URL do Web App do Google Apps Script.";
           return;
         }
+        var landingUrl = String(window.location.href || "");
         var payload = {
           submitted_at: new Date().toISOString(),
-          page_url: window.location.href,
-          user_agent: window.navigator.userAgent,
           nome: nome,
           email: email,
           whatsapp: wa || "",
-          mensagem: msg
+          mensagem: msg,
+          page_url: landingUrl,
+          user_agent: window.navigator.userAgent
         };
         function toPublicAppsScriptUrl(url) {
           return String(url || "").replace(
