@@ -309,17 +309,6 @@ body {
   min-width: 0;
 }
 
-/* Contexto: tipografia que era do título principal (Montserrat) */
-.hero-context-heading {
-  font-family: var(--font-heading);
-  font-size: clamp(1.35rem, 2.8vw, 1.95rem);
-  font-weight: 700;
-  line-height: 1.22;
-  color: var(--color-text);
-  margin: 0 0 0.65rem;
-  letter-spacing: -0.02em;
-}
-
 .hero h1 {
   margin: 0 0 0.85rem;
   line-height: 1.05;
@@ -337,14 +326,16 @@ body {
   color: var(--color-primary);
 }
 
-/* Subtítulo: tipografia que era da linha “para empresas” (corpo / Source Sans) */
+/* Subtítulo: mesma tipografia que a antiga linha “Mapeamento de processos para empresas” */
 .hero-subline {
-  font-family: var(--font-sans);
-  font-size: 1.08rem;
-  line-height: 1.55;
-  color: var(--color-muted);
+  font-family: var(--font-heading);
+  font-size: clamp(1.35rem, 2.8vw, 1.95rem);
+  font-weight: 700;
+  line-height: 1.28;
+  color: var(--color-text);
   margin: 0 0 1.15rem;
   max-width: 52ch;
+  letter-spacing: -0.02em;
 }
 
 .hero-lead {
@@ -365,6 +356,7 @@ body {
 .hero-form-panel {
   position: relative;
   scroll-margin-top: 5.5rem;
+  min-width: 0;
 }
 
 .hero-form-label {
@@ -385,13 +377,13 @@ body {
 
 @media (max-width: 959px) {
   .contact-form--hero {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
 @media (min-width: 960px) {
   .contact-form--hero {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   }
 
   .contact-form--hero .field--full,
@@ -738,24 +730,30 @@ body {
 
 .contact-form {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 1rem 1.25rem;
   padding: 2rem;
   background: var(--color-bg);
   border: 1px solid var(--color-border);
   border-radius: var(--radius);
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .field {
   display: flex;
   flex-direction: column;
   gap: 0.35rem;
+  min-width: 0;
 }
 
 .field span {
   font-size: 0.8rem;
   font-weight: 600;
   color: var(--color-text);
+  overflow-wrap: break-word;
+  word-wrap: break-word;
 }
 
 .field input,
@@ -767,6 +765,10 @@ body {
   border-radius: var(--radius);
   background: var(--color-surface);
   color: var(--color-text);
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
 }
 
 .field input:focus,
@@ -794,7 +796,7 @@ body {
 
 @media (max-width: 640px) {
   .contact-form {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     padding: 1.25rem;
   }
 }
