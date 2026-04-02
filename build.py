@@ -19,6 +19,11 @@ _DEFAULT_SITE = "https://itajunior-mapeamentodeprocessos.vercel.app"
 
 def resolve_site_url() -> str:
     """URL base https sem barra final — para canonical, og:url e og:image."""
+    # Deploy de preview: usar o hostname deste deploy (evita canonical apontando para produção)
+    if os.environ.get("VERCEL_ENV") == "preview":
+        vercel_preview = (os.environ.get("VERCEL_URL") or "").strip().rstrip("/")
+        if vercel_preview:
+            return "https://" + vercel_preview.lstrip("/")
     explicit = (os.environ.get("PUBLIC_SITE_URL") or "").strip().rstrip("/")
     if explicit:
         if not explicit.startswith("http"):
