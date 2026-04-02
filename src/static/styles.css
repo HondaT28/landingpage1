@@ -121,9 +121,11 @@ body {
 
 .logo-image--ita {
   display: block;
-  width: 48px;
-  height: 48px;
+  height: 42px;
+  width: auto;
+  max-width: min(200px, 42vw);
   object-fit: contain;
+  object-position: left center;
 }
 
 .logo-image--junior {
@@ -138,8 +140,8 @@ body {
   }
 
   .logo-image--ita {
-    width: 40px;
-    height: 40px;
+    height: 34px;
+    max-width: min(160px, 48vw);
   }
 
   .header-logos {
@@ -313,11 +315,12 @@ body {
   color: var(--color-dark-muted);
 }
 
-.section-intro--spread {
-  max-width: none;
+/* Sobre nós: centralizado, largura alinhada à faixa dos 3 cards de estatísticas */
+.section-intro.section-intro--about {
+  max-width: 100%;
   width: 100%;
-  text-align: left;
-  margin-inline: 0;
+  text-align: center;
+  margin-inline: auto;
   line-height: 1.75;
 }
 
