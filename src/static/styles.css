@@ -125,18 +125,18 @@ body {
   width: auto;
   max-width: min(200px, 42vw);
   object-fit: contain;
-  object-position: left center;
+  object-position: right center;
 }
 
 .logo-image--junior {
   display: block;
-  width: min(260px, 48vw);
+  width: min(200px, 40vw);
   height: auto;
 }
 
 @media (max-width: 640px) {
   .logo-image--junior {
-    width: min(200px, 52vw);
+    width: min(150px, 46vw);
   }
 
   .logo-image--ita {
