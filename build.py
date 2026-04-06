@@ -14,7 +14,7 @@ STATIC = SRC / "static"
 OUT = ROOT / "out"
 
 # Fallback se não houver env (ex.: build local): alinhar ao slug desejado na Vercel
-_DEFAULT_SITE = "https://itajunior-mapeamentodeprocessos.vercel.app"
+_DEFAULT_SITE = "https://itajunior.vercel.app"
 
 
 def resolve_site_url() -> str:
@@ -54,9 +54,12 @@ def main() -> None:
 
     out_static = OUT / "static"
     out_static.mkdir(parents=True, exist_ok=True)
-    for path in STATIC.glob("*"):
+    for path in STATIC.rglob("*"):
         if path.is_file():
-            (out_static / path.name).write_bytes(path.read_bytes())
+            rel = path.relative_to(STATIC)
+            dest = out_static / rel
+            dest.parent.mkdir(parents=True, exist_ok=True)
+            dest.write_bytes(path.read_bytes())
 
     print(f"Build OK: {OUT / 'index.html'}")
 

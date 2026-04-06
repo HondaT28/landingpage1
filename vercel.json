@@ -6,7 +6,7 @@
   "outputDirectory": "out",
   "build": {
     "env": {
-      "PUBLIC_SITE_URL": "https://itajunior-mapeamentodeprocessos.vercel.app"
+      "PUBLIC_SITE_URL": "https://itajunior.vercel.app"
     }
   }
 }
