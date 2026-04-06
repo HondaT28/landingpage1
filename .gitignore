@@ -5,3 +5,5 @@ venv/
 out/
 .DS_Store
 *.log
+tools/LogoBgStripper.exe
+tools/*.pdb

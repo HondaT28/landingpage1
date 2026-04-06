@@ -884,8 +884,7 @@ body {
   flex: 0 0 auto;
   min-height: 3.5rem;
   padding: 0.4rem 0.85rem;
-  background: rgba(255, 255, 255, 0.06);
-  border-radius: 0.5rem;
+  background: transparent;
 }
 
 .client-logo-marquee__list img {
