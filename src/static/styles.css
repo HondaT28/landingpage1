@@ -396,6 +396,10 @@ body {
 .hero-lead {
   max-width: 100%;
   margin-bottom: 1rem;
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: auto;
+  text-align-last: left;
 }
 
 .hero-official {
@@ -640,6 +644,10 @@ body {
   font-size: 0.95rem;
   line-height: 1.55;
   flex: 1;
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: auto;
+  text-align-last: left;
 }
 
 .cards {
@@ -694,6 +702,10 @@ body {
   color: var(--color-muted);
   font-size: 0.98rem;
   flex: 1;
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: auto;
+  text-align-last: left;
 }
 
 .card-link {
