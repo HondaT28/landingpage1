@@ -25,7 +25,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="static/styles.css?v=20260407" />
+  <link rel="stylesheet" href="static/styles.css?v=20260408" />
 </head>
 <body>
   <a class="skip-link" href="#conteudo-principal">Ir para o conteúdo</a>
@@ -86,7 +86,7 @@
         </div>
         <div class="hero-form-panel hero-animate" id="contato">
           <p class="hero-form-label">Fale com a equipe</p>
-          <form class="contact-form contact-form--hero" id="form-contato" action="#" method="post" novalidate>
+          <form class="contact-form contact-form--hero js-contact-form" id="form-contato" action="#" method="post" novalidate>
             <label class="field">
               <span>Nome</span>
               <input type="text" name="nome" id="nome" required autocomplete="name" />
@@ -288,6 +288,34 @@
       </div>
     </section>
 
+    <section id="contato-final" class="section section-contact-final" aria-labelledby="contato-final-title">
+      <div class="container container--form-wide">
+        <h2 id="contato-final-title" class="section-title">Fale com a equipe</h2>
+        <form class="contact-form contact-form--wide js-contact-form" id="form-contato-rodape" action="#" method="post" novalidate>
+          <label class="field">
+            <span>Nome</span>
+            <input type="text" name="nome" id="nome-rodape" required autocomplete="name" />
+          </label>
+          <label class="field">
+            <span>Email</span>
+            <input type="email" name="email" id="email-rodape" required autocomplete="email" />
+          </label>
+          <label class="field">
+            <span>Whatsapp</span>
+            <input type="tel" name="whatsapp" id="whatsapp-rodape" autocomplete="tel" placeholder="(00) 00000-0000" />
+          </label>
+          <label class="field field--full">
+            <span>Descreva seu projeto</span>
+            <textarea name="mensagem" id="mensagem-rodape" rows="4" required placeholder="Descreva seu projeto"></textarea>
+          </label>
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary btn-block">Enviar</button>
+          </div>
+          <p class="form-note" id="form-feedback-rodape" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+
   </main>
 
   <footer class="site-footer">
@@ -419,58 +447,65 @@
     })();
     (function () {
       var GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyGRmLYdemi_k02PlDmtAb5iH6ZTwGvIsgb7-gBO-is1TdGD55fQ7I7pNan3PnD-eBi/exec";
-      var form = document.getElementById("form-contato");
-      var feedback = document.getElementById("form-feedback");
-      if (!form) return;
-      form.addEventListener("submit", async function (e) {
-        e.preventDefault();
-        var nome = document.getElementById("nome").value.trim();
-        var email = document.getElementById("email").value.trim();
-        var wa = document.getElementById("whatsapp").value.trim();
-        var msg = document.getElementById("mensagem").value.trim();
-        if (!nome || !email || !msg) {
-          feedback.textContent = "Preencha nome, email e a descrição do projeto.";
-          return;
-        }
-        if (!GOOGLE_APPS_SCRIPT_URL || GOOGLE_APPS_SCRIPT_URL.indexOf("COLE_AQUI_") === 0) {
-          feedback.textContent = "Configuração pendente: cole a URL do Web App do Google Apps Script.";
-          return;
-        }
-        var landingUrl = String(window.location.href || "");
-        var payload = {
-          submitted_at: new Date().toISOString(),
-          nome: nome,
-          email: email,
-          whatsapp: wa || "",
-          mensagem: msg,
-          user_agent: String(window.navigator.userAgent || ""),
-          page_url: landingUrl
-        };
-        function toPublicAppsScriptUrl(url) {
-          return String(url || "").replace(
-            /https:\/\/script\.google\.com\/a\/macros\/[^/]+\/s\//,
-            "https://script.google.com/macros/s/"
-          );
-        }
-        var endpoint = toPublicAppsScriptUrl(GOOGLE_APPS_SCRIPT_URL);
-        feedback.textContent = "Enviando seus dados...";
-        var submitBtn = form.querySelector("button[type='submit']");
-        if (submitBtn) submitBtn.disabled = true;
-        try {
-          await fetch(endpoint, {
-            method: "POST",
-            mode: "no-cors",
-            headers: { "Content-Type": "text/plain;charset=utf-8" },
-            body: JSON.stringify(payload)
-          });
-          feedback.textContent = "Recebemos seu contato! Em breve nossa equipe retorna.";
-          form.reset();
-        } catch (err) {
-          feedback.textContent = "Nao foi possivel enviar agora. Tente novamente em instantes.";
-        } finally {
-          if (submitBtn) submitBtn.disabled = false;
-        }
-      });
+      function toPublicAppsScriptUrl(url) {
+        return String(url || "").replace(
+          /https:\/\/script\.google\.com\/a\/macros\/[^/]+\/s\//,
+          "https://script.google.com/macros/s/"
+        );
+      }
+      function bindContactForm(form) {
+        var feedback = form.querySelector(".form-note");
+        if (!feedback) return;
+        form.addEventListener("submit", async function (e) {
+          e.preventDefault();
+          var nomeEl = form.querySelector('[name="nome"]');
+          var emailEl = form.querySelector('[name="email"]');
+          var waEl = form.querySelector('[name="whatsapp"]');
+          var msgEl = form.querySelector('[name="mensagem"]');
+          if (!nomeEl || !emailEl || !msgEl) return;
+          var nome = nomeEl.value.trim();
+          var email = emailEl.value.trim();
+          var wa = waEl ? waEl.value.trim() : "";
+          var msg = msgEl.value.trim();
+          if (!nome || !email || !msg) {
+            feedback.textContent = "Preencha nome, email e a descrição do projeto.";
+            return;
+          }
+          if (!GOOGLE_APPS_SCRIPT_URL || GOOGLE_APPS_SCRIPT_URL.indexOf("COLE_AQUI_") === 0) {
+            feedback.textContent = "Configuração pendente: cole a URL do Web App do Google Apps Script.";
+            return;
+          }
+          var landingUrl = String(window.location.href || "");
+          var payload = {
+            submitted_at: new Date().toISOString(),
+            nome: nome,
+            email: email,
+            whatsapp: wa || "",
+            mensagem: msg,
+            user_agent: String(window.navigator.userAgent || ""),
+            page_url: landingUrl
+          };
+          var endpoint = toPublicAppsScriptUrl(GOOGLE_APPS_SCRIPT_URL);
+          feedback.textContent = "Enviando seus dados...";
+          var submitBtn = form.querySelector("button[type='submit']");
+          if (submitBtn) submitBtn.disabled = true;
+          try {
+            await fetch(endpoint, {
+              method: "POST",
+              mode: "no-cors",
+              headers: { "Content-Type": "text/plain;charset=utf-8" },
+              body: JSON.stringify(payload)
+            });
+            feedback.textContent = "Recebemos seu contato! Em breve nossa equipe retorna.";
+            form.reset();
+          } catch (err) {
+            feedback.textContent = "Nao foi possivel enviar agora. Tente novamente em instantes.";
+          } finally {
+            if (submitBtn) submitBtn.disabled = false;
+          }
+        });
+      }
+      document.querySelectorAll("form.js-contact-form").forEach(bindContactForm);
     })();
   </script>
 </body>

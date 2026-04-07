@@ -951,6 +951,24 @@ body {
   box-sizing: border-box;
 }
 
+/* Formulário final — mais largo; nome / email / WhatsApp em linha */
+.section-contact-final {
+  scroll-margin-top: 5.5rem;
+  background: var(--color-surface);
+  border-top: 1px solid var(--color-border);
+}
+
+.container--form-wide {
+  width: min(1220px, calc(100% - 2rem));
+  margin-inline: auto;
+}
+
+.contact-form.contact-form--wide {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  padding: 2.15rem 2.5rem;
+  box-shadow: var(--shadow);
+}
+
 .field {
   display: flex;
   flex-direction: column;
@@ -1008,6 +1026,10 @@ body {
   .contact-form {
     grid-template-columns: minmax(0, 1fr);
     padding: 1.25rem;
+  }
+
+  .contact-form.contact-form--wide {
+    padding: 1.35rem 1.25rem;
   }
 }
 
