@@ -537,6 +537,27 @@ body {
   font-size: 0.85rem;
 }
 
+.section-cta {
+  margin-top: 2.75rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.section-cta__hint {
+  margin: 0;
+  max-width: 28rem;
+  font-size: 0.92rem;
+  line-height: 1.45;
+  color: var(--color-muted);
+}
+
+.section-cta--dark .section-cta__hint {
+  color: var(--color-dark-muted);
+}
+
 /* Sections */
 .section {
   padding: 4rem 0;
