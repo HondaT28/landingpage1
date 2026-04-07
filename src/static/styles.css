@@ -926,25 +926,6 @@ body {
   }
 }
 
-.highlight-percent {
-  display: inline-block;
-  color: #1a5fb4;
-  text-shadow: 0 0 0 rgba(26, 95, 180, 0.35);
-  animation: percentPulse 2.2s ease-in-out infinite;
-}
-
-@keyframes percentPulse {
-  0%,
-  100% {
-    transform: translateY(0);
-    text-shadow: 0 0 0 rgba(26, 95, 180, 0.28);
-  }
-  50% {
-    transform: translateY(-1px);
-    text-shadow: 0 0 10px rgba(26, 95, 180, 0.32);
-  }
-}
-
 .contact-form {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
@@ -1119,11 +1100,6 @@ body {
   .hero-animate,
   .reveal-on-scroll {
     opacity: 1 !important;
-  }
-
-  .highlight-percent {
-    animation: none !important;
-    text-shadow: none !important;
   }
 
   .client-logo-marquee__track {
