@@ -3,10 +3,12 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  {% if gtm_id %}
+  {% if gtm_id or ga4_id %}
   <script>
     window.dataLayer = window.dataLayer || [];
   </script>
+  {% endif %}
+  {% if gtm_id %}
   <!-- Google Tag Manager -->
   <script>
     (function (w, d, s, l, i) {
@@ -21,6 +23,17 @@
     })(window, document, "script", "dataLayer", "{{ gtm_id }}");
   </script>
   <!-- End Google Tag Manager -->
+  {% endif %}
+  {% if ga4_id %}
+  <!-- Google tag (gtag.js) — GA4 {{ ga4_id }}; não duplique tag GA4 Configuration no GTM para o mesmo ID -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id={{ ga4_id }}"></script>
+  <script>
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+    gtag("config", "{{ ga4_id }}");
+  </script>
   {% endif %}
   <meta name="description" content="Mapeamento de processos para empresas: diagnóstico, AS-IS, otimizações e plano de ação para reduzir retrabalho, custos e gargalos operacionais." />
   <title>ITA Júnior — Mapeamento de Processos</title>
@@ -44,7 +57,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="static/styles.css?v=20260411" />
+  <link rel="stylesheet" href="static/styles.css?v=20260412" />
 </head>
 <body>
   {% if gtm_id %}
@@ -537,6 +550,13 @@
               form_location: form.getAttribute("data-gtm-form-location") || "unknown",
               lead_source: "landing_contact_form"
             });
+            if (typeof gtag === "function") {
+              gtag("event", "generate_lead", {
+                form_id: form.id || "contact",
+                form_location: form.getAttribute("data-gtm-form-location") || "unknown",
+                lead_source: "landing_contact_form"
+              });
+            }
           } catch (err) {
             feedback.textContent = "Nao foi possivel enviar agora. Tente novamente em instantes.";
           } finally {

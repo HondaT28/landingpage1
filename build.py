@@ -42,6 +42,7 @@ def resolve_site_url() -> str:
 
 
 _GTM_ID_RE = re.compile(r"^GTM-[A-Z0-9]+$", re.IGNORECASE)
+_GA4_ID_RE = re.compile(r"^G-[A-Z0-9]+$", re.IGNORECASE)
 
 
 def resolve_gtm_container_id() -> str:
@@ -51,6 +52,15 @@ def resolve_gtm_container_id() -> str:
         return ""
     raw = raw.upper()
     return raw if _GTM_ID_RE.match(raw) else ""
+
+
+def resolve_ga4_measurement_id() -> str:
+    """Measurement ID do GA4 (ex.: G-XXXXXXXX). GA4_MEASUREMENT_ID no build (ex.: Vercel)."""
+    raw = (os.environ.get("GA4_MEASUREMENT_ID") or os.environ.get("GOOGLE_MEASUREMENT_ID") or "").strip()
+    if not raw:
+        return ""
+    raw = raw.upper()
+    return raw if _GA4_ID_RE.match(raw) else ""
 
 
 def main() -> None:
@@ -63,7 +73,8 @@ def main() -> None:
     template = env.get_template("index.html.jinja2")
     site_url = resolve_site_url()
     gtm_id = resolve_gtm_container_id()
-    html = template.render(site_url=site_url, gtm_id=gtm_id)
+    ga4_id = resolve_ga4_measurement_id()
+    html = template.render(site_url=site_url, gtm_id=gtm_id, ga4_id=ga4_id)
     (OUT / "index.html").write_text(html, encoding="utf-8")
 
     out_static = OUT / "static"

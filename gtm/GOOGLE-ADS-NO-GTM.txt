@@ -1,0 +1,40 @@
+================================================================================
+GA4 neste site (já configurado no código)
+================================================================================
+O Measurement ID G-ZQDCMJWV9R é carregado via gtag.js no HTML gerado pelo build.
+NÃO crie no Google Tag Manager uma segunda tag "Google Analytics: GA4 Configuration"
+ou "Google tag" com o mesmo G-ZQDCMJWV9R — isso duplicaria page_view e eventos.
+
+No GTM você pode usar só tags do Google Ads (e outras) acionadas por eventos.
+
+================================================================================
+Google Ads — conversão quando o lead envia o formulário
+================================================================================
+1) Google Ads → Ferramentas → Conversões → Nova ação de conversão → Site.
+2) Crie uma conversão do tipo "Enviar formulário de lead" (ou "Página" se
+   preferir URL; o site dispara evento generate_lead no dataLayer).
+3) Anote o ID de conversão no formato AW-XXXXXXX / rótulo (Conversion label).
+
+No Google Tag Manager (container GTM-P6LNZRDF):
+
+4) Tags → Nova → Google Ads → "Conversão do Google Ads" (Conversion Tracking).
+5) Cole o ID de conversão e o rótulo fornecidos pelo Google Ads.
+6) Acionador → Novo → Tipo: "Evento personalizado" (Custom Event).
+   Nome do evento: generate_lead
+   (exatamente assim, igual ao que o site envia no dataLayer.)
+7) Salve o acionador e associe à tag de conversão.
+8) Preview → teste enviando o formulário → confira o disparo.
+9) Submit / Publicar o container.
+
+================================================================================
+Opcional: remarketing / tag global do Ads
+================================================================================
+Se o Google Ads pedir a "Tag do Google" global (gtag) para remarketing, siga o
+assistente do Ads; evite duplicar o mesmo Measurement ID GA4 no GTM (ver topo).
+
+================================================================================
+Validação
+================================================================================
+- GA4: Relatórios → Tempo real (após publicar o site com GA4_MEASUREMENT_ID).
+- GTM: modo Preview na URL de produção.
+- Ads: Conversões → verificar disparos após algumas horas.
