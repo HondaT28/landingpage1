@@ -1,0 +1,71 @@
+================================================================================
+Checagem rápida (site em produção)
+================================================================================
+Na página publicada https://itajunior.vercel.app o HTML inclui:
+- Google Tag Manager: GTM-P6LNZRDF (script + noscript)
+- Google tag (gtag.js) com Measurement ID: G-ZQDCMJWV9R
+- dataLayer + evento generate_lead no JavaScript do formulário
+
+Ou seja: acessos normais (link direto, Google Ads, etc.) carregam esses scripts.
+Não é necessário abrir pelo Tag Manager para o site "funcionar".
+
+================================================================================
+Por que parece que só funciona "dentro do Tag Manager"
+================================================================================
+O modo **Preview** (Depurador) do GTM é uma janela especial: ele conecta o seu
+navegador à sessão de teste do GTM. Os hits aparecem no painel de Preview
+enquanto essa sessão está ativa.
+
+Quando você abre o **mesmo link em outra aba**, sem iniciar o Preview de novo,
+você está no modo **visitante normal**. O GTM **continua carregando** e as tags
+publicadas disparam — mas você **não vê** o painel de Preview daquela aba,
+porque ela não está "pareada" com o depurador.
+
+Resumo:
+- Preview = ver **detalhe técnico** do que o GTM disparou naquela aba.
+- Link direto = mesmo código no ar; dados vão para GA4/Ads conforme tags.
+
+================================================================================
+Onde ver os dados da melhor forma (GA4)
+================================================================================
+1) Google Analytics (analytics.google.com) → propriedade com ID G-ZQDCMJWV9R
+
+2) **Tempo real** (Realtime)
+   - Menu: Relatórios → Tempo real (ou "Realtime")
+   - Abra o site em outra janela (link direto ou anúncio) e navegue.
+   - Em segundos costuma aparecer "Usuários em tempo real" e eventos.
+   - Use para validar que o tráfego chegou.
+
+3) **Depuração** (DebugView) — opcional, mais técnico
+   - Admin → Configurações de exibição de dados → Depuração (DebugView)
+   - Exige ativar "modo de depuração" (extensão Chrome "Google Analytics Debugger"
+     ou tag com debug_mode). Para o dia a dia, Tempo real basta.
+
+4) **Relatórios padrão** (Aquisição, Engajamento, etc.)
+   - Muitos relatórios usam dados processados: podem levar **24–48 horas**
+     (às vezes mais) para ficarem estáveis. Para campanha no ar, use **Tempo real**
+     no começo.
+
+5) **Explorar** (Explore)
+   - Para tabelas e funis customizados depois que houver volume de dados.
+
+================================================================================
+Onde ver no Google Tag Manager
+================================================================================
+- **Versões publicadas**: Admin → Versões do contêiner (o que está no ar).
+- **Preview**: só para testar antes de publicar ou depurar; não é o relatório
+  principal de negócio.
+
+================================================================================
+Google Ads
+================================================================================
+- Conversões e campanhas: painel do Google Ads (pode haver atraso de horas).
+- Use o mesmo clique de anúncio + conversão em janela de atribuição.
+
+================================================================================
+Se "Tempo real" do GA4 não mostra visita pelo link direto
+================================================================================
+- Confirme que a URL é exatamente a do site publicado (domínio certo).
+- Desative bloqueadores de anúncio / privacidade extrema no navegador de teste.
+- Confirme no código-fonte da página (Ctrl+U) se aparece G-ZQDCMJWV9R e GTM-.
+- No GA4, confira se está na **propriedade** correta (mesmo Measurement ID).
