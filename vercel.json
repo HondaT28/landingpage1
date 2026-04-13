@@ -6,7 +6,8 @@
   "outputDirectory": "out",
   "build": {
     "env": {
-      "PUBLIC_SITE_URL": "https://itajunior.vercel.app"
+      "PUBLIC_SITE_URL": "https://itajunior.vercel.app",
+      "GTM_CONTAINER_ID": "GTM-P6LNZRDF"
     }
   }
 }

@@ -4,6 +4,9 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   {% if gtm_id %}
+  <script>
+    window.dataLayer = window.dataLayer || [];
+  </script>
   <!-- Google Tag Manager -->
   <script>
     (function (w, d, s, l, i) {
@@ -41,7 +44,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="static/styles.css?v=20260410" />
+  <link rel="stylesheet" href="static/styles.css?v=20260411" />
 </head>
 <body>
   {% if gtm_id %}
@@ -115,7 +118,7 @@
         </div>
         <div class="hero-form-panel hero-animate" id="contato">
           <p class="hero-form-label">Fale com a nossa equipe</p>
-          <form class="contact-form contact-form--hero js-contact-form" id="form-contato" action="#" method="post" novalidate>
+          <form class="contact-form contact-form--hero js-contact-form" id="form-contato" action="#" method="post" novalidate data-gtm-form-location="hero">
             <label class="field">
               <span>Nome</span>
               <input type="text" name="nome" id="nome" required autocomplete="name" />
@@ -320,7 +323,7 @@
     <section id="contato-final" class="section section-contact-final" aria-labelledby="contato-final-title">
       <div class="container container--form-wide">
         <h2 id="contato-final-title" class="section-title">Fale com a nossa equipe</h2>
-        <form class="contact-form contact-form--wide js-contact-form" id="form-contato-rodape" action="#" method="post" novalidate>
+        <form class="contact-form contact-form--wide js-contact-form" id="form-contato-rodape" action="#" method="post" novalidate data-gtm-form-location="footer">
           <label class="field">
             <span>Nome</span>
             <input type="text" name="nome" id="nome-rodape" required autocomplete="name" />
@@ -527,6 +530,13 @@
             });
             feedback.textContent = "Recebemos seu contato! Em breve nossa equipe retorna.";
             form.reset();
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+              event: "generate_lead",
+              form_id: form.id || "contact",
+              form_location: form.getAttribute("data-gtm-form-location") || "unknown",
+              lead_source: "landing_contact_form"
+            });
           } catch (err) {
             feedback.textContent = "Nao foi possivel enviar agora. Tente novamente em instantes.";
           } finally {
