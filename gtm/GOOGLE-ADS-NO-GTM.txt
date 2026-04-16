@@ -1,4 +1,14 @@
 ================================================================================
+Tag do Google Ads (AW-…) no site
+================================================================================
+O ID AW-18087844687 é enviado ao HTML via gtag('config', …) no build
+(variável GOOGLE_ADS_TAG_ID no vercel.json / Vercel). O verificador do Google Ads
+procura esse ID na página — não confunda com o Measurement ID GA4 (G-…).
+
+Não duplique no GTM uma segunda "Tag do Google" com o mesmo AW-… se o site
+já carrega esse ID via gtag.
+
+================================================================================
 GA4 neste site (já configurado no código)
 ================================================================================
 O Measurement ID G-ZQDCMJWV9R é carregado via gtag.js no HTML gerado pelo build.

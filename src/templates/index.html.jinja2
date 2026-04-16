@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  {% if gtm_id or ga4_id %}
+  {% if gtm_id or ga4_id or ads_tag_id %}
   <script>
     window.dataLayer = window.dataLayer || [];
   </script>
@@ -24,15 +24,16 @@
   </script>
   <!-- End Google Tag Manager -->
   {% endif %}
-  {% if ga4_id %}
-  <!-- Google tag (gtag.js) — GA4 {{ ga4_id }}; não duplique tag GA4 Configuration no GTM para o mesmo ID -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id={{ ga4_id }}"></script>
+  {% if ga4_id or ads_tag_id %}
+  <!-- Google tag (gtag.js): GA4 +/ou Google Ads; não duplique o mesmo ID no GTM -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id={{ ga4_id or ads_tag_id }}"></script>
   <script>
     function gtag() {
       dataLayer.push(arguments);
     }
     gtag("js", new Date());
-    gtag("config", "{{ ga4_id }}");
+    {% if ga4_id %}gtag("config", "{{ ga4_id }}");{% endif %}
+    {% if ads_tag_id %}gtag("config", "{{ ads_tag_id }}");{% endif %}
   </script>
   {% endif %}
   <meta name="description" content="Mapeamento de processos para empresas: diagnóstico, AS-IS, otimizações e plano de ação para reduzir retrabalho, custos e gargalos operacionais." />
@@ -57,7 +58,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="static/styles.css?v=20260412" />
+  <link rel="stylesheet" href="static/styles.css?v=20260413" />
 </head>
 <body>
   {% if gtm_id %}

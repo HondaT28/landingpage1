@@ -43,6 +43,7 @@ def resolve_site_url() -> str:
 
 _GTM_ID_RE = re.compile(r"^GTM-[A-Z0-9]+$", re.IGNORECASE)
 _GA4_ID_RE = re.compile(r"^G-[A-Z0-9]+$", re.IGNORECASE)
+_GOOGLE_ADS_TAG_RE = re.compile(r"^AW-[0-9]+$", re.IGNORECASE)
 
 
 def resolve_gtm_container_id() -> str:
@@ -63,6 +64,15 @@ def resolve_ga4_measurement_id() -> str:
     return raw if _GA4_ID_RE.match(raw) else ""
 
 
+def resolve_google_ads_tag_id() -> str:
+    """Tag do Google Ads (gtag), ex.: AW-123456789. GOOGLE_ADS_TAG_ID no build."""
+    raw = (os.environ.get("GOOGLE_ADS_TAG_ID") or os.environ.get("ADS_GOOGLE_TAG_ID") or "").strip()
+    if not raw:
+        return ""
+    raw = raw.upper()
+    return raw if _GOOGLE_ADS_TAG_RE.match(raw) else ""
+
+
 def main() -> None:
     OUT.mkdir(parents=True, exist_ok=True)
 
@@ -74,7 +84,10 @@ def main() -> None:
     site_url = resolve_site_url()
     gtm_id = resolve_gtm_container_id()
     ga4_id = resolve_ga4_measurement_id()
-    html = template.render(site_url=site_url, gtm_id=gtm_id, ga4_id=ga4_id)
+    ads_tag_id = resolve_google_ads_tag_id()
+    html = template.render(
+        site_url=site_url, gtm_id=gtm_id, ga4_id=ga4_id, ads_tag_id=ads_tag_id
+    )
     (OUT / "index.html").write_text(html, encoding="utf-8")
 
     out_static = OUT / "static"
